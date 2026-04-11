@@ -15,6 +15,14 @@
 
 <img src="assets/target_dashboard.png" alt="Tax Readiness and Financial Health Scorecard — the target output of the lesson" width="820"/>
 
+<br/><br/>
+
+<em>The lesson starts with a goal like this ↑ and ends with an AI-designed workflow like this ↓</em>
+
+<br/><br/>
+
+<img src="assets/reference_workflow.png" alt="Reference workflow flowchart — 4 phases from source intake through insight delivery" width="480"/>
+
 </div>
 
 ---

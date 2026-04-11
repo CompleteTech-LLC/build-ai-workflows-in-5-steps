@@ -975,13 +975,38 @@ print(f"Tokens this call: {ai.last_usage}")
 # CELL 22 — Render the generated mermaid inline
 # ============================================================================
 CELL_22 = '''
-# Render the AI-generated Mermaid flowchart inline.
-# VS Code and modern Jupyter render Mermaid in Markdown cells natively.
+# Render the AI-generated Mermaid flowchart as an actual image.
+#
+# We use mermaid.ink (a free public rendering service from the Mermaid team)
+# to convert the diagram code into a PNG that displays everywhere — Jupyter,
+# JupyterLab, Colab, VS Code, and GitHub's .ipynb preview. This avoids the
+# "some viewers render Mermaid, others show raw code" problem.
 
-from IPython.display import Markdown, display
+import base64
+import urllib.request
+from IPython.display import Image, Markdown, display
+
+
+def render_mermaid(mermaid_source: str) -> bytes | None:
+    """Call mermaid.ink and return PNG bytes, or None if the service is unreachable."""
+    try:
+        encoded = base64.urlsafe_b64encode(mermaid_source.encode("utf-8")).decode("ascii")
+        url = f"https://mermaid.ink/img/{encoded}?type=png"
+        with urllib.request.urlopen(url, timeout=30) as response:
+            return response.read()
+    except Exception as e:
+        print(f"Could not reach mermaid.ink ({e}). Falling back to raw code display.")
+        return None
+
 
 print("Your AI-generated workflow:")
-display(Markdown(f"```mermaid\\n{mermaid_code}\\n```"))
+png_bytes = render_mermaid(mermaid_code)
+if png_bytes:
+    Path("outputs/workflow.png").write_bytes(png_bytes)
+    print(f"Saved rendered diagram to outputs/workflow.png ({len(png_bytes):,} bytes)")
+    display(Image(data=png_bytes, format="png"))
+else:
+    display(Markdown(f"```mermaid\\n{mermaid_code}\\n```"))
 '''
 
 # ============================================================================
@@ -989,14 +1014,19 @@ display(Markdown(f"```mermaid\\n{mermaid_code}\\n```"))
 # ============================================================================
 CELL_23 = '''
 # Display the reference Mermaid shipped with the lesson for side-by-side comparison.
+# Uses the same render_mermaid() helper defined in the previous cell.
 
 reference_mmd_path = Path("assets/reference_workflow.mmd")
 if reference_mmd_path.exists():
     reference_mmd = reference_mmd_path.read_text(encoding="utf-8")
     print("Reference workflow (hand-authored, shipped with the lesson):")
-    display(Markdown(f"```mermaid\\n{reference_mmd}\\n```"))
+    ref_png = render_mermaid(reference_mmd)
+    if ref_png:
+        display(Image(data=ref_png, format="png"))
+    else:
+        display(Markdown(f"```mermaid\\n{reference_mmd}\\n```"))
 else:
-    print("No reference mermaid found.")
+    print("No reference mermaid found at assets/reference_workflow.mmd.")
 '''
 
 # ============================================================================
