@@ -1,0 +1,8 @@
+# Build AI Workflows in 5 Steps — dependencies
+# Loose pins for forward-compatibility. Tighten if a provider ships a breaking change.
+
+anthropic>=0.40.0
+openai>=1.50.0
+google-genai>=0.4.0
+pypdf>=4.0.0
+python-dotenv>=1.0.0

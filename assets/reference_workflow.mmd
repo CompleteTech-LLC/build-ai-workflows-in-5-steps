@@ -1,0 +1,73 @@
+%%{init: {"theme": "dark", "flowchart": {"curve": "basis", "htmlLabels": true}}}%%
+flowchart TD
+
+  subgraph SG1["1. Source Intake"]
+    direction TB
+    A["Attachment:<br/>Financial Pack PDF"]
+    B["Extract tables,<br/>months, entity, periods"]
+    C{"Parsed cleanly?"}
+    D["OCR / manual rescue"]
+
+    A --> B --> C
+    C -- No --> D
+    D --> B
+  end
+
+  subgraph SG2["2. Classification"]
+    direction TB
+    N["Normalize signs,<br/>currency, subtotals,<br/>fiscal periods"]
+    M["Map raw accounts to<br/>canonical buckets"]
+    Q{"Confidence >= 0.80?"}
+    R["Review queue:<br/>misc, owner pay,<br/>capex, ambiguous lines"]
+
+    N --> M --> Q
+    Q -- No --> R
+    R --> M
+  end
+
+  subgraph SG3["3. Computation"]
+    direction TB
+    E["Enrich missing inputs:<br/>balance sheet, headcount,<br/>tax profile, history"]
+    F{"Critical inputs missing?"}
+    G["Partial dashboard +<br/>missing-data action items"]
+    H["Compute deductions,<br/>tax estimate, ratios,<br/>quarterly trends"]
+
+    E --> F
+    F -- Yes --> G --> H
+    F -- No --> H
+  end
+
+  subgraph SG4["4. Insight + Delivery"]
+    direction TB
+    I["Generate plain-English<br/>insights and priorities"]
+    J["QA + reconcile to source<br/>and benchmark rules"]
+    K{"Material variance or<br/>low confidence?"}
+    L["Human approval / override"]
+    P["Publish dashboard,<br/>audit log, refresh schedule"]
+
+    I --> J --> K
+    K -- Yes --> L
+    L --> J
+    K -- No --> P
+  end
+
+  C -- Yes --> N
+  Q -- Yes --> E
+  H --> I
+
+  classDef attachment fill:#2f63ff,stroke:#8eb1ff,stroke-width:2px,color:#ffffff;
+  classDef process fill:#0d7c73,stroke:#7ef2e5,stroke-width:2px,color:#ffffff;
+  classDef decision fill:#c56a00,stroke:#ffd08a,stroke-width:2px,color:#ffffff;
+  classDef review fill:#bf2f2f,stroke:#ff8f8f,stroke-width:2px,color:#ffffff;
+  classDef action fill:#8e52ff,stroke:#c9abff,stroke-width:2px,color:#ffffff;
+
+  class A attachment;
+  class B,N,M,E,H,I,J,P process;
+  class C,Q,F,K decision;
+  class D,R review;
+  class G,L action;
+
+  style SG1 fill:#071631,stroke:#5aa1ff,stroke-width:2px,color:#ffffff
+  style SG2 fill:#032018,stroke:#46d9a5,stroke-width:2px,color:#ffffff
+  style SG3 fill:#261604,stroke:#f0ad2e,stroke-width:2px,color:#ffffff
+  style SG4 fill:#1b082f,stroke:#b487ff,stroke-width:2px,color:#ffffff
