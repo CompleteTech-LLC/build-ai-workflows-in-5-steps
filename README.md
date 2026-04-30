@@ -17,17 +17,43 @@
 
 <br/><br/>
 
-<em>The lesson starts with a goal like this ↑ and ends with an AI-designed workflow like this ↓</em>
+1. The notebook starts with this target dashboard: a financial health scorecard for a fictional restaurant.
+
+<br/><br/>
+
+<a href="assets/source_financial_pack.pdf">
+  <img src="assets/source_financial_pack_preview.png" alt="Preview of the example source PDF used in the notebook" width="560"/>
+</a>
+
+<br/><br/>
+
+2. Then it loads the built-in source document: a synthetic one-page financial pack for Sample Bistro &amp; Co. Click the preview to open the full PDF.
 
 <br/><br/>
 
 <img src="assets/reference_workflow.png" alt="Reference workflow flowchart — 4 phases from source intake through insight delivery" width="480"/>
 
+<br/><br/>
+
+3. Then the AI designs a workflow that explains how to get from the source document to the target dashboard.
+
 </div>
 
 ---
 
-Watch an AI read your goal, then your source document, then design its own workflow to get from one to the other — and finally hand you reusable code that runs that workflow for you. By the end you've turned a messy PDF into an executable AI pipeline in under 10 minutes, while learning five advanced prompting techniques that work across Anthropic, OpenAI, and Google.
+This repository is a teaching notebook about a repeatable AI workflow design method, not a restaurant-finance product. The shipped example is just the lesson vehicle: a messy synthetic restaurant financial PDF goes in, a target scorecard image defines the end state, and the AI learns to design the transformation between them.
+
+Watch an AI read the goal image, then the source document, then decompose the transformation into a workflow, render that workflow as Mermaid, and finally write reusable Python for the deterministic steps. By the end you've turned a messy PDF into an executable AI pipeline while learning the five-step method behind the lesson and the prompting patterns that transfer to other goal-image plus source-document problems.
+
+If you want to follow the exact built-in example before swapping in your own files, open the lesson's default source PDF: [assets/source_financial_pack.pdf](assets/source_financial_pack.pdf).
+
+## The default example
+
+- **Goal:** a financial health and tax-readiness dashboard image in [assets/target_dashboard.png](assets/target_dashboard.png)
+- **Source:** a synthetic one-page financial pack for **Sample Bistro & Co.** in [assets/source_financial_pack.pdf](assets/source_financial_pack.pdf)
+- **Lesson objective:** have the AI infer the workflow that can transform the source into the goal, then crystallize that workflow into executable Python
+
+The notebook deliberately uses a source document with realistic friction: non-calendar fiscal periods, negative revenue conventions, ambiguous line items like owner salary, and messy PDF extraction. Those edge cases are part of the lesson, because they force the AI to surface judgment points instead of pretending the input is clean.
 
 ## What you'll learn
 
@@ -100,6 +126,7 @@ build-ai-workflows-in-5-steps/
 │   ├── completetech_logo.jpg / .svg
 │   ├── target_dashboard.png               # default goal (swappable)
 │   ├── source_financial_pack.pdf          # default source (swappable)
+│   ├── source_financial_pack_preview.png  # README preview of the default source PDF
 │   ├── reference_workflow.mmd             # hand-authored Mermaid for comparison
 │   └── reference_decomposition.md         # hand-authored decomposition for comparison
 └── scripts/
