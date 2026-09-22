@@ -1,0 +1,41 @@
+name: Workflow skill package
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.10', '3.12']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Build the combined lesson without executing notebook cells
+        run: python scripts/build_skill_notebook.py
+      - name: Verify committed Step 6 notebook is reproducible
+        run: git diff --exit-code -- create_workflow_skill.ipynb
+      - name: Run offline regression tests
+        run: python -m unittest discover -s tests -v
+      - name: Export the synthetic example with actual repository branding
+        run: >-
+          python scripts/create_workflow_skill.py
+          --outputs examples/workflow --destination outputs/demo-skills
+          --name text-summary --title 'Text Summary'
+          --description 'Count words in a supplied text file. Use for text-summary tasks.'
+      - name: Validate the self-contained exported package
+        run: python outputs/demo-skills/text-summary/scripts/validate_skill.py outputs/demo-skills/text-summary
+      - uses: actions/upload-artifact@v4
+        with:
+          name: six-step-lesson-python-${{ matrix.python-version }}
+          path: |
+            build_ai_workflows_in_6_steps.ipynb
+            outputs/demo-skills/text-summary.zip

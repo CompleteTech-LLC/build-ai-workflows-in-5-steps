@@ -2,175 +2,206 @@
 
 <img src="assets/completetech_logo.jpg" alt="CompleteTech LLC" width="220"/>
 
-# Build AI Workflows in 5 Steps
+# Build AI Workflows in 6 Steps
 
-**A CompleteTech LLC lesson — from goal image to executable workflow code, in one notebook, any AI provider.**
+**A CompleteTech LLC lesson — from a goal image to executable workflow code, then a reusable skill.**
 
 ![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-3776AB?logo=python&logoColor=white)
 ![License MIT](https://img.shields.io/badge/license-MIT-green)
-![Providers](https://img.shields.io/badge/providers-Claude%20%7C%20GPT%20%7C%20Gemini-8A2BE2)
-![Notebook](https://img.shields.io/badge/format-Jupyter-F37626?logo=jupyter&logoColor=white)
+![Steps](https://img.shields.io/badge/lesson-6_steps-1E3A8A)
 
-<br/>
-
-<img src="assets/target_dashboard.png" alt="Tax Readiness and Financial Health Scorecard — the target output of the lesson" width="820"/>
-
-<br/><br/>
-
-1. The notebook starts with this target dashboard: a financial health scorecard for a fictional restaurant.
-
-<br/><br/>
-
-<a href="assets/source_financial_pack.pdf">
-  <img src="assets/source_financial_pack_preview.png" alt="Preview of the example source PDF used in the notebook" width="560"/>
-</a>
-
-<br/><br/>
-
-2. Then it loads the built-in source document: a synthetic one-page financial pack for Sample Bistro &amp; Co. Click the preview to open the full PDF.
-
-<br/><br/>
-
-<img src="assets/reference_workflow.png" alt="Reference workflow flowchart — 4 phases from source intake through insight delivery" width="480"/>
-
-<br/><br/>
-
-3. Then the AI designs a workflow that explains how to get from the source document to the target dashboard.
+<img src="assets/target_dashboard.png" alt="The synthetic financial scorecard used as the target output" width="820"/>
 
 </div>
 
----
+This is a general-purpose workflow-design lesson, not a restaurant-finance product.
+The example pairs a target scorecard with a messy, synthetic financial pack for
+**Sample Bistro & Co.** The method transfers to other source-document and target-image tasks.
 
-This repository is a teaching notebook about a repeatable AI workflow design method, not a restaurant-finance product. The shipped example is just the lesson vehicle: a messy synthetic restaurant financial PDF goes in, a target scorecard image defines the end state, and the AI learns to design the transformation between them.
+**New: Step 6 packages the workflow you just built as an Agent Skill.** It exports
+instructions, unchanged workflow artifacts, onboarding, review gates, branding,
+validation, and a ZIP without another AI call or automatic execution.
 
-Watch an AI read the goal image, then the source document, then decompose the transformation into a workflow, render that workflow as Mermaid, and finally write reusable Python for the deterministic steps. By the end you've turned a messy PDF into an executable AI pipeline while learning the five-step method behind the lesson and the prompting patterns that transfer to other goal-image plus source-document problems.
+The repository URL and original `build_ai_workflows_in_5_steps.ipynb` remain stable
+for existing links and teaching material. Continue in
+[create_workflow_skill.ipynb](create_workflow_skill.ipynb), or build the combined
+six-step notebook using the command below.
 
-If you want to follow the exact built-in example before swapping in your own files, open the lesson's default source PDF: [assets/source_financial_pack.pdf](assets/source_financial_pack.pdf).
+## The six steps
 
-## The default example
+| Step | What you do | Result |
+|---|---|---|
+| 1. Goal priming | Show the AI the intended output. | Shared target context. |
+| 2. Source priming | Load the source document. | Shared source context. |
+| 3. Task decomposition | Design the transformation and decision boundaries. | `outputs/decomposition.md` |
+| 4. Visual workflow design | Express the workflow in Mermaid. | `outputs/workflow.mmd` |
+| 5. Workflow crystallization | Generate reusable Python for deterministic work. | `outputs/workflow.py` |
+| **6. Skill packaging** | Capture the completed workflow for reuse on new inputs. | **Skill folder + ZIP in `outputs/skills/`** |
 
-- **Goal:** a financial health and tax-readiness dashboard image in [assets/target_dashboard.png](assets/target_dashboard.png)
-- **Source:** a synthetic one-page financial pack for **Sample Bistro & Co.** in [assets/source_financial_pack.pdf](assets/source_financial_pack.pdf)
-- **Lesson objective:** have the AI infer the workflow that can transform the source into the goal, then crystallize that workflow into executable Python
-
-The notebook deliberately uses a source document with realistic friction: non-calendar fiscal periods, negative revenue conventions, ambiguous line items like owner salary, and messy PDF extraction. Those edge cases are part of the lesson, because they force the AI to surface judgment points instead of pretending the input is clean.
-
-## What you'll learn
-
-1. **Context Priming** — load your goal and source into the AI in stages
-2. **Task Decomposition** — have the AI design a repeatable workflow with a structured execution contract
-3. **Visual Workflow Design** — render the workflow as a Mermaid diagram
-4. **Workflow Crystallization** — turn the workflow into executable code so future runs skip the expensive AI calls
-
-## Audience
-
-Total beginners (no Python experience) through experienced developers. The notebook ships with a collapsed adapter cell and inline "under the hood" sidebars so both audiences can get value from the same file.
+The first five steps use the notebook's Anthropic, OpenAI, or Google adapter.
+Step 6 is deterministic, standard-library-only Python. It does not need an API key.
+A packaged workflow may still need an approved AI adapter at its judgment points.
 
 ## Quickstart
 
 ```bash
-# 1. Clone
 git clone https://github.com/CompleteTech-LLC/build-ai-workflows-in-5-steps.git
 cd build-ai-workflows-in-5-steps
-
-# 2. Create your .env from the template
 cp .env.example .env
-# then open .env and paste your API key for ONE provider
+# Set ONE provider key in .env for Steps 1-5. Never commit this file.
 
-# 3. Open the notebook in VS Code or Jupyter
-code build_ai_workflows_in_5_steps.ipynb
-# or: jupyter lab build_ai_workflows_in_5_steps.ipynb
-
-# 4. Run All
+# Generate the combined lesson; this builds notebook files, not AI outputs.
+python scripts/build_skill_notebook.py
+jupyter lab build_ai_workflows_in_6_steps.ipynb
 ```
 
-The notebook auto-detects which provider you have a key for and uses it. No other configuration required.
+Use Python 3.10+ and JupyterLab or VS Code's Python/Jupyter extensions. The original
+lesson installs its provider/PDF dependencies in a notebook cell. Review those
+installs and the provider's current model availability/pricing before running live calls.
+The model and pricing examples retained in the original notebook are historical,
+not a guarantee of current cost or availability.
 
-## What you need
+The combined notebook has all six steps in order. Alternatively, run the existing
+five-step notebook, then open `create_workflow_skill.ipynb` in a fresh or existing
+kernel. Step 6 reads saved artifacts; it does not need the earlier chat history.
 
-- **Python 3.10+**
-- **One API key** from Anthropic, OpenAI, or Google (not all three)
-- **VS Code with the Python + Jupyter extensions**, or classic JupyterLab, or Google Colab
+[Onboarding](ONBOARDING.md) · [Step 6 guide](docs/step-6-create-a-skill.md) · [Branding](BRANDING.md)
 
-### Getting an API key
+## Export a skill from an already completed workflow
 
-| Provider | Where to sign up | Free tier? |
-|---|---|---|
-| **Anthropic** (Claude) | https://console.anthropic.com/settings/keys | $5 trial credit |
-| **OpenAI** (GPT) | https://platform.openai.com/api-keys | Pay-as-you-go |
-| **Google** (Gemini) | https://aistudio.google.com/apikey | Yes — generous free tier, no credit card |
+```bash
+python scripts/create_workflow_skill.py \
+  --outputs outputs \
+  --name financial-scorecard-workflow \
+  --title "Financial Scorecard Workflow" \
+  --description "Prepare a draft scorecard from a financial pack and target image. Use for the reviewed financial-scorecard workflow, not tax advice or filing."
 
-**Recommended starting point:** Google AI Studio. Free key in under 60 seconds, no credit card.
-
-## Default models (latest flagships, April 2026)
-
-| Provider | Model | Input / Output ($/M tok) |
-|---|---|---|
-| Anthropic | `claude-opus-4-6` | $5.00 / $25.00 |
-| OpenAI | `gpt-5.4` | $2.50 / $15.00 |
-| Google | `gemini-3.1-pro-preview` | $2.00 / $12.00 |
-
-Running the whole notebook once costs roughly **$0.10–$0.50** at flagship-tier. You can swap in cheaper mid-tier models by passing `AIClient("anthropic", model="claude-haiku-4-5")` in Cell 6.
-
-## Repo layout
-
-```
-build-ai-workflows-in-5-steps/
-├── build_ai_workflows_in_5_steps.ipynb   # the lesson, 29 cells
-├── README.md                              # you are here
-├── LICENSE                                # MIT © 2026 CompleteTech LLC
-├── requirements.txt                       # 5 dependencies
-├── .env.example                           # template for your API key
-├── .gitignore
-├── assets/
-│   ├── completetech_logo.jpg / .svg
-│   ├── target_dashboard.png               # default goal (swappable)
-│   ├── source_financial_pack.pdf          # default source (swappable)
-│   ├── source_financial_pack_preview.png  # README preview of the default source PDF
-│   ├── reference_workflow.mmd             # hand-authored Mermaid for comparison
-│   └── reference_decomposition.md         # hand-authored decomposition for comparison
-└── scripts/
-    ├── build_notebook.py                  # regenerates the .ipynb from Python source
-    ├── generate_assets.py                 # regenerates the synthetic PDF + dashboard
-    └── README.md                          # how to use the build scripts
+python scripts/validate_skill.py outputs/skills/financial-scorecard-workflow
 ```
 
-## Using your own files
+Change the name, title, and description for your actual workflow. The description
+should say what the skill does and when it should be used, rather than broadly
+claiming to solve every task. The exporter refuses to overwrite existing exports;
+use a new `--destination` or name for another version.
 
-Open the notebook, scroll to **Cell 7 — YOUR INPUTS**, and change the two paths:
+### Offline example — no credentials required
 
-```python
-TARGET_IMAGE = "path/to/your-goal.png"
-SOURCE_DOC   = "path/to/your-source.pdf"
+```bash
+python scripts/create_workflow_skill.py \
+  --outputs examples/workflow --destination outputs/demo-skills \
+  --name text-summary --title "Text Summary" \
+  --description "Count words in a supplied text file. Use for text-summary tasks."
 ```
 
-Re-run. The whole workflow retargets. Try:
+This exports a small synthetic text-summary fixture. It tests packaging, not the
+financial workflow, model quality, or domain correctness.
 
-- A Slack thread screenshot + a meeting transcript → action-item extractor
-- A finished report PDF + raw interview notes → report-drafting workflow
-- A filled-out form screenshot + a source database dump → form-filling agent
+## What Step 6 creates
 
-## What this notebook deliberately doesn't teach
+```text
+outputs/skills/<skill-name>/
+├── SKILL.md                     # scoped trigger, procedure, inputs, approval gates
+├── README.md                    # brand-aware entry page
+├── ONBOARDING.md                # review, setup, installation, first-run guidance
+├── LICENSE
+├── skill-package.json           # version, review status, provenance, SHA-256 hashes
+├── requirements.txt             # Step 5 runtime dependency allowance; review/pin
+├── inputs.example.json
+├── agents/openai.yaml           # UI branding; implicit invocation disabled
+├── scripts/
+│   ├── workflow.py              # exact Step 5 bytes; never imported by exporter
+│   └── validate_skill.py        # self-contained structural/integrity checker
+├── references/
+│   ├── decomposition.md        # exact Step 3 bytes
+│   ├── workflow.mmd            # exact Step 4 bytes
+│   └── review-checklist.md
+└── assets/
+    ├── brand-profile.json
+    └── logo.jpg                # optional PNG/JPEG; absent for text-only/unbranded
+outputs/skills/<skill-name>.zip  # one top-level skill directory
+```
 
-- **Prompt caching.** Production workflows should use `cache_control` blocks on Anthropic and automatic caching on OpenAI/Gemini for 75–90% discounts on repeated context. Out of scope for the primer.
-- **Streaming.** Blocking calls only, for simplicity.
-- **Multi-agent orchestration.** The workflow is sequential. Production systems often fan out to parallel agents.
-- **Evaluation.** We don't score the decomposition against ground truth. Production LLM workflows need evals.
+No raw source documents, target images, `.env` files, provider SDKs, or notebook
+histories are copied. Derived artifacts can still contain private information;
+review every file before sharing. Credential detection is a best-effort pattern
+check, not a guarantee that a package is free of secrets or personal data.
 
-Pointers to all four are in the Citations cell at the end of the notebook.
+## Branding that follows the workflow
 
-## License and attribution
+An explicit `--brand-profile path/to/brand-profile.json` wins. Otherwise Step 6
+uses `outputs/brand-profile.json` when present. Only workflows without a profile
+receive the **CompleteTech LLC starter**: the existing repository logo and the
+palette/tagline from `agentic-delivery-skill`.
 
-Source code is licensed under the **MIT License**. See [LICENSE](LICENSE).
+Custom identities are never silently mixed with CompleteTech's. Invalid profiles
+fail rather than falling back. `--unbranded` explicitly disables output branding.
+The versioned profile travels with the skill for downstream renderers; packaging
+does not rewrite arbitrary generated code to apply the theme. See [BRANDING.md](BRANDING.md).
 
-The **method and teaching material** — the integration and pedagogical sequencing of goal-first context priming, source priming, structured decomposition, Mermaid visualization, and code crystallization — are © 2026 CompleteTech LLC. You may freely use, adapt, and teach from this content; attribution to CompleteTech LLC is appreciated.
+## Review before reuse
 
-The individual prompt engineering techniques are drawn from published research and vendor documentation cited in the final cell of the notebook. This lesson's contribution is the *integration* of those techniques into a single repeatable methodology.
+**A valid package is not a validated workflow.** The exporter checks Python syntax,
+entrypoint shape, names, required files, safe paths, and hashes; it does not execute
+the generated code or certify business logic. Packages are marked **unreviewed**.
 
-## Feedback and contributions
+Read `ONBOARDING.md` and `references/review-checklist.md`. Inspect code before import,
+review dependencies, approve execution explicitly, and test synthetic success and
+failure cases in an isolated environment. Provide a compatible approved `ai.ask`
+adapter when needed; do not fabricate missing judgments or financial values.
 
-Issues and pull requests welcome. If you build something interesting with a swapped-in source document, we'd love to see it.
+After review, manually place the skill folder under your project's `.agents/skills/`
+for Codex or `.claude/skills/` for Claude Code. Host permissions still apply. Nothing
+is installed, executed, pushed to a registry, or published automatically.
 
----
+## The original lesson assets
+
+[Source financial PDF](assets/source_financial_pack.pdf) ·
+[Source preview](assets/source_financial_pack_preview.png) ·
+[Target dashboard](assets/target_dashboard.png) ·
+[Reference workflow](assets/reference_workflow.mmd) ·
+[Reference decomposition](assets/reference_decomposition.md)
+
+The financial example deliberately includes non-calendar fiscal periods, negative
+revenue conventions, ambiguous line items, and messy PDF extraction. Those are
+judgment points to surface, not reasons to pretend the input is clean.
+
+For a different task, change `TARGET_IMAGE` and `SOURCE_DOC` in the original lesson's
+**YOUR INPUTS** cell, review any example-specific prompts in Step 5, and customize
+the Step 6 skill metadata. The exporter itself is not tied to finance.
+
+## Development and validation
+
+```bash
+# Rebuild the standalone Step 6 notebook only.
+python scripts/build_skill_notebook.py --capstone-only
+
+# Rebuild the original lesson, continuation, and combined six-step notebook.
+python scripts/build_skill_notebook.py
+
+# Offline regression tests; no provider credentials or third-party dependencies.
+python -m unittest discover -s tests -v
+```
+
+The original builder remains the source of truth for Steps 1–5. The new builder
+inserts Step 6 before the recap, preserving the earlier code cells. The combined
+notebook is generated (not committed); CI builds it and publishes it as a workflow
+artifact alongside the synthetic example skill. The checked-in continuation is
+reproducible from `scripts/build_skill_notebook.py`.
+
+This primer still does not provide a production deployment, domain evaluation,
+prompt-caching strategy, streaming UI, or multi-agent orchestration. Step 6 adds
+structural validation and a review handoff, not those missing runtime capabilities.
+
+## Standards and attribution
+
+[Agent Skills specification](https://agentskills.io/specification) ·
+[Codex skills](https://developers.openai.com/codex/skills/) ·
+[Claude Code skills](https://code.claude.com/docs/en/skills)
+
+Code is MIT licensed; see [LICENSE](LICENSE). Teaching material and lesson
+integration © 2026 CompleteTech LLC. The original notebook retains its research
+and vendor references. The Agent Skills format is an external open specification,
+not a CompleteTech invention. Brand marks remain their owners' property; the
+starter does not grant endorsement or ownership of customer output.
 
 **© 2026 CompleteTech LLC** — [complete.tech](https://complete.tech)

@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "version": "1.0.0",
+  "name": "CompleteTech LLC",
+  "tagline": "Innovation at Every Integration",
+  "colors": {
+    "accent": "#1E3A8A",
+    "accent_dark": "#0F172A",
+    "accent_soft": "#EEF2FF",
+    "muted": "#64748B",
+    "border": "#E2E8F0",
+    "zebra": "#F8FAFC"
+  },
+  "logo": "completetech_logo.jpg",
+  "provenance": {
+    "palette": "CompleteTech-LLC/agentic-delivery-skill/scripts/render_pdf.py",
+    "palette_blob_sha": "a1477153f9d0d9e4db5aa2f620981b5a796e22fd",
+    "logo": "Existing assets/completetech_logo.jpg in this repository",
+    "logo_blob_sha": "1325b5a410c5dc4c8af75fce515a188714262c25"
+  },
+  "usage": "Starter example only. Preserve explicit customer branding; no endorsement or trademark rights are implied."
+}
