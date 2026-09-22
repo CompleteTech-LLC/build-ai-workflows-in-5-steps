@@ -1,0 +1,13 @@
+{
+  "name": "text-summary",
+  "title": "Text Summary",
+  "description": "Count words in a supplied UTF-8 text file. Use for text-summary tasks, not financial analysis or image rendering.",
+  "outcome": "Return a deterministic word count and the supplied target reference.",
+  "owner": "Synthetic example operator",
+  "source_refs": ["A new operator-supplied UTF-8 text file"],
+  "target_ref": "examples/builder/goal.md",
+  "success_criteria": ["The text 'one two three' produces word_count equal to 3.", "An empty text produces word_count equal to 0.", "A missing source raises an error without fabricating output."],
+  "excluded_uses": ["Financial advice", "External communication", "Image rendering"],
+  "constraints": ["Synthetic demo only", "Python standard library", "No AI judgment calls"],
+  "network_policy": "none"
+}

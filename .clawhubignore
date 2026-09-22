@@ -1,0 +1,16 @@
+.git/
+.github/
+.env*
+outputs/
+.workflow-builder/
+**/workflow-builder.json
+**/__pycache__/
+**/*.pyc
+tests/
+*.ipynb
+scripts/build_notebook.py
+scripts/build_skill_notebook.py
+scripts/generate_assets.py
+assets/source_financial_pack*
+assets/target_dashboard.png
+assets/reference_*

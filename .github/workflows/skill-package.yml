@@ -23,19 +23,30 @@ jobs:
         run: python scripts/build_skill_notebook.py
       - name: Verify committed Step 6 notebook is reproducible
         run: git diff --exit-code -- create_workflow_skill.ipynb
-      - name: Run offline regression tests
+      - name: Run offline regression tests including relocated builder installation
         run: python -m unittest discover -s tests -v
-      - name: Export the synthetic example with actual repository branding
+      - name: Validate the builder skill resources and local links
+        run: python scripts/validate_quality.py
+      - name: Package the builder itself for installation
+        run: python scripts/package_builder_skill.py --destination outputs/builder-distribution
+      - name: Validate the self-contained builder distribution
+        run: python outputs/builder-distribution/agentic-workflow-builder-skill/scripts/validate_quality.py --installed
+      - name: Export the synthetic child skill with actual repository branding
         run: >-
           python scripts/create_workflow_skill.py
           --outputs examples/workflow --destination outputs/demo-skills
           --name text-summary --title 'Text Summary'
           --description 'Count words in a supplied text file. Use for text-summary tasks.'
-      - name: Validate the self-contained exported package
+      - name: Validate the self-contained child package
         run: python outputs/demo-skills/text-summary/scripts/validate_skill.py outputs/demo-skills/text-summary
+      - name: Archive committed sources for offline reproduction
+        run: git archive --format=zip --output=outputs/repository-source.zip HEAD
       - uses: actions/upload-artifact@v4
         with:
-          name: six-step-lesson-python-${{ matrix.python-version }}
+          name: workflow-builder-python-${{ matrix.python-version }}
+          retention-days: 14
           path: |
             build_ai_workflows_in_6_steps.ipynb
+            outputs/builder-distribution/agentic-workflow-builder-skill.zip
             outputs/demo-skills/text-summary.zip
+            outputs/repository-source.zip

@@ -1,0 +1,18 @@
+flowchart TD
+    A[Onboard or resume verified facts] --> B[1 Prime the goal]
+    B --> C[2 Inspect authorized sources]
+    C --> D[3 Decompose transformation]
+    D --> E[4 Create Mermaid workflow]
+    E --> F[5 Write deterministic Python and evaluation plan]
+    F --> G{Execution explicitly approved?}
+    G -->|Yes| H[Run reviewed synthetic tests in isolation]
+    G -->|No| I[Record tests not run]
+    H --> J[6 Package domain workflow as a skill]
+    I --> J
+    J --> K[Validate package and privacy boundaries]
+    K --> L[Handoff skill ZIP, evidence, brand and open approvals]
+    L --> M{Install or publish separately approved?}
+    M -->|No| N[Stop at handoff]
+    M -->|Yes| O[Use approved host or registry procedure]
+    classDef branded fill:#EEF2FF,stroke:#1E3A8A,color:#0F172A;
+    class A,B,C,D,E,F,J,K,L branded;

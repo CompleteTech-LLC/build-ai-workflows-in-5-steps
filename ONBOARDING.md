@@ -1,46 +1,80 @@
-# Onboarding
+# Workflow Builder Onboarding
 
-## Choose your entry point
+## 1. Choose a route
 
-New to the lesson: run `python scripts/build_skill_notebook.py`, open the generated
-`build_ai_workflows_in_6_steps.ipynb`, and follow all six steps. You need Python
-3.10+, a notebook host, and one approved provider key for Steps 1–5.
+New workflow: use this skill's six-step process. Existing design: inspect artifacts
+and resume at the first missing or invalid stage. Completed Step 3–5 outputs: the
+standalone create_workflow_skill.py exporter still works; use the builder path to
+add explicit onboarding, goal/source notes, and evaluation planning. Notebook
+learner: the original lesson remains in the repository, separate from the installed
+skill. Do not force notebooks or a new provider key on someone using an agent host.
 
-Already completed Steps 1–5: open `create_workflow_skill.ipynb` or use the CLI in
-README.md. Confirm `decomposition.md`, `workflow.mmd`, and `workflow.py` exist in
-the same output directory. A fresh kernel works; earlier variables are not needed.
+## 2. Disclose the local workspace
 
-Trying the packaging step offline: use `examples/workflow` as the input directory.
-No credential is needed. This is synthetic test data, not an evaluated AI workflow.
+State where files will be written before first initialization. Onboarding retains
+verified intake facts, source references (not source contents), constraints, and a
+brand profile/logo snapshot in that directory. Subsequent design artifacts are
+written there. Nothing is stored globally, transmitted by the helpers, scanned from
+accounts, or scheduled. Agent-host prompt processing is governed by the host.
+Keep the workspace out of public repositories; brand and source references may be
+identifying even without raw customer documents.
 
-## Before export
+## 3. Reuse known facts, then fill gaps
 
-Choose a lowercase, hyphen-separated skill name (1–64 characters), a clear title,
-and a task-specific description (up to 1,024 characters). Review the workflow's
-input/output contract and ensure Step 5 defines
-`run_workflow(source_path, target_dashboard_path, ai=None)`.
+Inspect the current request, supplied files, previous handoff, and existing
+workflow-builder.json first. Use [the interview guide](references/onboarding.md).
+Ask only missing questions. Capture facts in the exact fields of
+[workflow-intake.json](templates/workflow-intake.json); do not add credential fields.
+The agent can fill the JSON from chat answers so the user need not edit JSON.
 
-Choose the downstream output identity. Use an explicit brand profile or place
-`brand-profile.json` alongside the workflow artifacts. No profile means the
-CompleteTech starter; `--unbranded` disables that fallback. See BRANDING.md.
+Minimum packaging facts: workflow name/title/description, desired outcome, owner,
+source references, target reference, and success criteria. Constraints and exclusions
+can be empty only when genuinely absent; clarify consequential omissions. A target
+may be a written specification instead of an image. Record host, repetition cadence,
+cost/latency limits, and data-retention requirements in constraints when relevant.
 
-## First successful action
+## 4. Choose branding once
 
-Export the synthetic example using the command in README.md, then validate the
-resulting folder. Success means the folder/ZIP are structurally valid, not that a
-production workflow has been executed or proven correct.
+Use `--brand-profile /approved/brand/brand-profile.json` for customer branding.
+Without an explicit profile, the CompleteTech starter is used and disclosed, as
+requested for this toolkit. `--unbranded` is the explicit opt-out. Invalid profiles
+never fall back. See [BRANDING.md](BRANDING.md) for required fields and local logo rules.
+The profile and selected asset are copied into the new workspace with hashes.
+Later exports use that snapshot, not a silently changed global default.
 
-Read the exported ONBOARDING.md and review checklist before copying the skill into
-an agent's skill directory. Installation, dependencies, AI calls, and execution
-need separate user approval. Use a new export destination for reruns; existing
-packages are intentionally not overwritten.
+## 5. Initialize or resume
 
-## Troubleshooting
+Use an absolute SKILL_DIR pointing to the directory containing SKILL.md.
 
-Missing artifact: complete Steps 3–5, or point `--outputs` at their actual directory.
-Syntax/signature error: review and repair Step 5's generated Python; do not execute
-it merely to diagnose packaging. Invalid branding: repair the supplied profile;
-the exporter will not silently replace it. Hash mismatch: the exported files have
-changed; inspect them and rebuild from reviewed sources rather than bypassing checks.
+```bash
+python "$SKILL_DIR/scripts/workflow_builder.py" template
+python "$SKILL_DIR/scripts/workflow_builder.py" init \
+  --workspace /approved/project/workflow --intake /approved/project/intake.json
+python "$SKILL_DIR/scripts/workflow_builder.py" status --workspace /approved/project/workflow
+```
 
-Run `python -m unittest discover -s tests -v` for the offline exporter tests.
+No intake argument creates a draft with explicit missing facts. Initialization
+creates no generated Python or fictional results. Repeating init refuses overwrite;
+status reads saved facts without re-questioning the user. Edit unanswered intake
+fields in workflow-builder.json using verified answers. Unknown schema versions,
+unsafe types, possible secrets, invalid slugs, and changed brand snapshots fail.
+For a new brand/version, choose a new workspace and deliberately reuse reviewed
+facts. Never delete the existing workspace to make a command pass.
+
+## 6. First useful result
+
+After onboarding, author goal.md and source-intake.md from actual evidence, then
+follow [SKILL.md](SKILL.md). Draft-only work may continue with unresolved facts;
+export is blocked until required facts and artifacts are present. Run check before
+export. Its output reports structural readiness, not semantic completeness or safety.
+
+## 7. Review, installation, and removal
+
+Review code before import. Obtain execution permission and test in isolation before
+using live inputs. Install the builder by manually copying the packaged folder to
+one supported host location. Install its generated child skill only after separate
+review. This workflow does not change host configuration or install dependencies.
+
+To remove an installation, manually remove only the known installed skill folder.
+Retained project workspaces are separate; archive or delete only the selected ones
+when requested. No scheduler, daemon, hidden profile, or service must be removed.
