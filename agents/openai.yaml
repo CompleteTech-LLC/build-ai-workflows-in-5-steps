@@ -1,0 +1,8 @@
+interface:
+  display_name: "CompleteTech Workflow Builder"
+  short_description: "Design workflows and create reusable skills."
+  icon_large: "./assets/completetech_logo.jpg"
+  brand_color: "#1E3A8A"
+  default_prompt: "Use $agentic-workflow-builder-skill to onboard my workflow, reuse facts already provided, and guide all six steps through a reviewed skill package."
+policy:
+  allow_implicit_invocation: false

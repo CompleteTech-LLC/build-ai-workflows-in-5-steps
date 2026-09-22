@@ -26,3 +26,6 @@ Thumbs.db
 
 # Ephemeral / scratch scripts — never ship underscore-prefixed Python files
 _*.py
+
+# Combined lesson is reproducibly built from the original lesson + Step 6 source.
+build_ai_workflows_in_6_steps.ipynb
