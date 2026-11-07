@@ -1,0 +1,14 @@
+{
+  "worktree": {
+    "setup": [
+      "python3 -m venv .venv",
+      ".venv/bin/python -m pip install -r requirements.txt"
+    ],
+    "teardown": "echo \"Setup starts no persistent services; Paseo handles worktree removal.\""
+  },
+  "scripts": {
+    "diff-check": {
+      "command": "git diff --check"
+    }
+  }
+}
